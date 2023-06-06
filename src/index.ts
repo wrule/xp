@@ -1,11 +1,10 @@
-import * as mockttp from 'mockttp';
+import { Start, Stop } from './proxy_server';
 
-import { CloseProxy, OpenProxy, ProxyPort } from './global_proxy';
-import { Start } from './proxy_server';
-
-async function main() {
-  await OpenProxy();
+function main() {
   Start();
+  setTimeout(() => {
+    Stop();
+  }, 10000);
 }
 
 main();
