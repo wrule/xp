@@ -1,2 +1,8 @@
+import { CloseProxy, OpenProxy } from './global_proxy';
 
-console.log(1234);
+function main() {
+  console.log(1234);
+  CloseProxy();
+}
+
+main();
