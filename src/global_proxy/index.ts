@@ -32,27 +32,31 @@ export function status() {
 export const ProxyPort = 38503;
 
 export
-function OpenProxy() {
+async function OpenProxy() {
+  let result = null;
   if (agent_code === 'mac') {
-    return Promise.all([
+    result = await Promise.all([
       mac.enable('127.0.0.1', ProxyPort, 'http'),
       mac.enable('127.0.0.1', ProxyPort, 'https'),
     ]);
   } else if (agent_code === 'win') {
-    return win.enable('127.0.0.1', ProxyPort);
+    result = await win.enable('127.0.0.1', ProxyPort);
   }
+  return result;
 }
 
 export
-function CloseProxy() {
+async function CloseProxy() {
+  let result = null;
   if (agent_code === 'mac') {
-    return Promise.all([
+    result = await Promise.all([
       mac.disable('http'),
       mac.disable('https'),
     ]);
   } else if (agent_code === 'win') {
-    return win.disable();
+    result = await win.disable();
   }
+  return result;
 }
 
 export default {
