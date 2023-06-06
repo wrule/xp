@@ -8,7 +8,7 @@ const proxy_server = mockttp.getLocal({ https: ca });
 proxy_server.on('request', (request) => {
   RequestStore.UpdateRequest(request);
   IO.emit('request', request);
-  console.log(request.url);
+  console.log(request.id, request.url);
 });
 proxy_server.on('response', (response) => {
   IO.emit('response', response);

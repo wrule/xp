@@ -1,14 +1,16 @@
 import http from 'http';
 import express from 'express';
-import { CloseProxy, OpenProxy } from './global_proxy';
+import * as ProxyServer from './proxy_server';
 
 const app = express();
 const router = express.Router();
-router.post('/proxy/open', async (req, res) => {
-  res.json(await OpenProxy());
+router.post('/proxy/start', async (req, res) => {
+  await ProxyServer.Start();
+  res.sendStatus(200);
 });
-router.post('/proxy/close', async (req, res) => {
-  res.json(await CloseProxy());
+router.post('/proxy/stop', async (req, res) => {
+  await ProxyServer.Stop();
+  res.sendStatus(200);
 });
 app.use('/api', router);
 const api_server = http.createServer(app);
