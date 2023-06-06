@@ -14,10 +14,10 @@ proxy_server.on('response', (response) => {
   RequestStore.UpdateResponse(response);
   IO.emit('response', { ...response, body: undefined });
 });
-proxy_server.forAnyRequest().thenPassThrough();
 
 export
 async function Start() {
+  proxy_server.forAnyRequest().thenPassThrough();
   await proxy_server.start(ProxyPort);
   await OpenProxy();
   console.log('proxy_server started on port', ProxyPort, '...');

@@ -24,3 +24,8 @@ export
 function GetAllRequests() {
   return Array.from(store.values());
 }
+
+export
+function Clear() {
+  store.clear();
+}
