@@ -1,4 +1,4 @@
-import { execSync } from './exec-sync'
+import { execSync } from './exec_sync'
 import { ProxyType } from './index'
 
 let networkType: string

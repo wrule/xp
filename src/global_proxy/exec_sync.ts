@@ -7,7 +7,7 @@ export function execSync(cmd: string) {
 
   try {
     stdout = childProcess.execSync(cmd)
-  } catch (err) {
+  } catch (err: any) {
     stdout = err.stdout
     status = err.status
   }

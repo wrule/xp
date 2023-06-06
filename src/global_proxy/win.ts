@@ -1,4 +1,4 @@
-import { execSync } from './exec-sync'
+import { execSync } from './exec_sync'
 
 // tslint:disable-next-line
 const REG_PATH = `reg add "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings" /v`
