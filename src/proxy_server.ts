@@ -6,6 +6,9 @@ const proxy_server = mockttp.getLocal({ https: ca });
 proxy_server.on('request', (req) => {
   console.log(req.url);
 });
+proxy_server.on('response', (res) => {
+  // console.log(req.url);
+});
 proxy_server.forAnyRequest().thenPassThrough();
 
 export
