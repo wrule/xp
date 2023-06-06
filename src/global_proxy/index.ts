@@ -42,6 +42,7 @@ async function OpenProxy() {
   } else if (agent_code === 'win') {
     result = await win.enable('127.0.0.1', ProxyPort);
   }
+  console.log('global_proxy already registered');
   return result;
 }
 
@@ -56,6 +57,7 @@ async function CloseProxy() {
   } else if (agent_code === 'win') {
     result = await win.disable();
   }
+  console.log('global_proxy already uninstalled');
   return result;
 }
 
