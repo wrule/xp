@@ -14,6 +14,10 @@ router.post('/proxy/stop', async (req, res) => {
   res.sendStatus(200);
 });
 router.get('/requests', (req, res) => {
+  const decode = (url: any) => {
+    try { return decodeURIComponent(url) } catch (e) { }
+    return url;
+  };
   res.setHeader('content-type', 'text/html');
   res.send(`
     <!DOCTYPE html>
@@ -21,9 +25,10 @@ router.get('/requests', (req, res) => {
     <body style="font-size: 12px"><ul style="margin: 0;padding: 0;list-style-type: none">
       ${RequestStore.GetAllRequests().map((request, index) => `<li>
         <span>${index + 1}.</span>
-        <a style="color: blue" href="/api/request/${request.request?.id}/response_body">${request.request?.url}</a>
+        <a style="color: blue" href="/api/request/${request.request?.id}/response_body">${decode(request.request?.url)}</a>
         <a style="color: purple" href="/api/request/${request.request?.id}/request_body">request</a>
         <a style="color: green" href="/api/request/${request.request?.id}">detail</a>
+        ${request.request?.method === 'GET' ? `<a style="color: orange" href="${request.request?.url}">open</a>` : ''}
       </li>`).join('')}
     </ul></body></html>
   `);
