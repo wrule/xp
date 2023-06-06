@@ -15,15 +15,27 @@ router.post('/proxy/stop', async (req, res) => {
 });
 router.get('/request/:id', async (req, res) => {
   const request = RequestStore.GetRequest(req.params.id);
+  if (request) res.json({
+    request: { ...request.request, body: undefined },
+    response: { ...request.response, body: undefined },
+  });
+  else res.sendStatus(404);
+});
+router.get('/request/:id/request_body', (req, res) => {
+  const request = RequestStore.GetRequest(req.params.id);
   if (request) {
-    delete request.request.body;
-  } else res.sendStatus(404);
+    res.setHeader('content-type', request.request?.headers['content-type'] || 'text/plain');
+    res.send(request.request?.body.buffer);
+  }
+  else res.sendStatus(404);
 });
-router.get('/request/:id/request_body', async (req, res) => {
-  // res.json(RequestStore.GetRequestDetail(req.params.id));
-});
-router.get('/request/:id/response_body', async (req, res) => {
-  // res.json(RequestStore.GetRequestDetail(req.params.id));
+router.get('/request/:id/response_body', (req, res) => {
+  const request = RequestStore.GetRequest(req.params.id);
+  if (request) {
+    res.setHeader('content-type', request.response?.headers['content-type'] || 'text/plain');
+    res.send(request.response?.body.buffer);
+  }
+  else res.sendStatus(404);
 });
 app.use('/api', router);
 const api_server = http.createServer(app);
