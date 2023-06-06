@@ -34,20 +34,24 @@ export const ProxyPort = 38503;
 export
 function OpenProxy() {
   if (agent_code === 'mac') {
-    mac.enable('127.0.0.1', ProxyPort, 'http');
-    mac.enable('127.0.0.1', ProxyPort, 'https');
+    return Promise.all([
+      mac.enable('127.0.0.1', ProxyPort, 'http'),
+      mac.enable('127.0.0.1', ProxyPort, 'https'),
+    ]);
   } else if (agent_code === 'win') {
-    win.enable('127.0.0.1', ProxyPort);
+    return win.enable('127.0.0.1', ProxyPort);
   }
 }
 
 export
 function CloseProxy() {
   if (agent_code === 'mac') {
-    mac.disable('http');
-    mac.disable('https');
+    return Promise.all([
+      mac.disable('http'),
+      mac.disable('https'),
+    ]);
   } else if (agent_code === 'win') {
-    win.disable();
+    return win.disable();
   }
 }
 
