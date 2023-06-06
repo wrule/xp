@@ -1,13 +1,18 @@
 import * as mockttp from 'mockttp';
 import { CloseProxy, OpenProxy, ProxyPort } from './global_proxy';
 import ca from './ca';
+import { IO } from './socket_server';
+import * as RequestStore from './request_store';
 
 const proxy_server = mockttp.getLocal({ https: ca });
-proxy_server.on('request', (req) => {
-  console.log(req.url);
+proxy_server.on('request', (request) => {
+  RequestStore.UpdateRequest(request);
+  IO.emit('request', request);
+  console.log(request.url);
 });
-proxy_server.on('response', (res) => {
-  // console.log(req.url);
+proxy_server.on('response', (response) => {
+  IO.emit('response', response);
+  RequestStore.UpdateResponse(response);
 });
 proxy_server.forAnyRequest().thenPassThrough();
 
