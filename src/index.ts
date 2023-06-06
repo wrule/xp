@@ -1,11 +1,11 @@
 import * as mockttp from 'mockttp';
 
 import { CloseProxy, OpenProxy, ProxyPort } from './global_proxy';
+import { Start } from './proxy_server';
 
 async function main() {
   await OpenProxy();
-  const proxy_server = mockttp.getLocal();
-  proxy_server.start(ProxyPort);
+  Start();
 }
 
 main();
