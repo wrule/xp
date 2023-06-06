@@ -14,3 +14,8 @@ export
 function UpdateResponse(response: CompletedResponse) {
   store.set(response.id, { request: store.get(response.id)?.request, response });
 }
+
+export
+function GetRequest(id: string) {
+  return store.get(id);
+}

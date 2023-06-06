@@ -7,12 +7,12 @@ import * as RequestStore from './request_store';
 const proxy_server = mockttp.getLocal({ https: ca });
 proxy_server.on('request', (request) => {
   RequestStore.UpdateRequest(request);
-  IO.emit('request', request);
+  IO.emit('request', { ...request, body: undefined });
   console.log(request.id, request.url);
 });
 proxy_server.on('response', (response) => {
-  IO.emit('response', response);
   RequestStore.UpdateResponse(response);
+  IO.emit('response', { ...response, body: undefined });
 });
 proxy_server.forAnyRequest().thenPassThrough();
 
