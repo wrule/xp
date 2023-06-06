@@ -28,6 +28,19 @@ export function status() {
   return execute('status')
 }
 
+export const ProxyPort = 38503;
+
+export
+function OpenProxy() {
+  enable('127.0.0.1', ProxyPort, 'http');
+  enable('127.0.0.1', ProxyPort, 'https');
+}
+
+export
+function CloseProxy() {
+  disable();
+}
+
 export default {
   status,
   enable,
