@@ -19,3 +19,8 @@ export
 function GetRequest(id: string) {
   return store.get(id);
 }
+
+export
+function GetAllRequests() {
+  return Array.from(store.values());
+}

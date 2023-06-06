@@ -13,7 +13,22 @@ router.post('/proxy/stop', async (req, res) => {
   await ProxyServer.Stop();
   res.sendStatus(200);
 });
-router.get('/request/:id', async (req, res) => {
+router.get('/requests', (req, res) => {
+  res.setHeader('content-type', 'text/html');
+  res.send(`
+    <!DOCTYPE html>
+    <html><head><meta charset="utf-8"></head>
+    <body style="font-size: 12px"><ul style="margin: 0;padding: 0;list-style-type: none">
+      ${RequestStore.GetAllRequests().map((request, index) => `<li>
+        <span>${index + 1}.</span>
+        <a style="color: blue" href="/api/request/${request.request?.id}/response_body">${request.request?.url}</a>
+        <a style="color: purple" href="/api/request/${request.request?.id}/request_body">request</a>
+        <a style="color: green" href="/api/request/${request.request?.id}">detail</a>
+      </li>`).join('')}
+    </ul></body></html>
+  `);
+});
+router.get('/request/:id', (req, res) => {
   const request = RequestStore.GetRequest(req.params.id);
   if (request) res.json({
     request: { ...request.request, body: undefined },
