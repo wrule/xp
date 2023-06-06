@@ -1,8 +1,9 @@
 import { CloseProxy, OpenProxy } from './global_proxy';
 
-function main() {
+async function main() {
   console.log(1234);
-  CloseProxy();
+  const a = await CloseProxy();
+  console.log(a);
 }
 
 main();
