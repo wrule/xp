@@ -1,9 +1,11 @@
-import { CloseProxy, OpenProxy } from './global_proxy';
+import * as mockttp from 'mockttp';
+
+import { CloseProxy, OpenProxy, ProxyPort } from './global_proxy';
 
 async function main() {
-  console.log(1234);
-  const a = await CloseProxy();
-  console.log(a);
+  await OpenProxy();
+  const proxy_server = mockttp.getLocal();
+  proxy_server.start(ProxyPort);
 }
 
 main();
