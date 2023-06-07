@@ -22,10 +22,10 @@ router.get('/requests', (req, res) => {
   res.setHeader('content-type', 'text/html');
   res.send(Template.replace('{li}', RequestStore.GetAllRequests().map((request, index) => `<li>
     <span>${index + 1}.</span>
-    <a style="color: blue" href="/api/request/${request.request?.id}/response_body">${decode(request.request?.url)}</a>
-    <a style="color: purple" href="/api/request/${request.request?.id}/request_body">request</a>
-    <a style="color: green" href="/api/request/${request.request?.id}">detail</a>
-    ${request.request?.method === 'GET' ? `<a style="color: orange" href="${request.request?.url}">open</a>` : ''}
+    <a style="color: blue" href="/api/request/${request.request.id}/response_body">${decode(request.request.url)}</a>
+    <a style="color: purple" href="/api/request/${request.request.id}/request_body">request</a>
+    <a style="color: green" href="/api/request/${request.request.id}">detail</a>
+    ${request.request.method === 'GET' ? `<a style="color: orange" href="${request.request.url}">open</a>` : ''}
   </li>`).join('')));
 });
 router.post('/request/clear', (req, res) => {
@@ -43,8 +43,8 @@ router.get('/request/:id', (req, res) => {
 router.get('/request/:id/request_body', (req, res) => {
   const request = RequestStore.GetRequest(req.params.id);
   if (request) {
-    res.setHeader('content-type', request.request?.headers['content-type'] || 'text/plain');
-    res.send(request.request?.body.buffer);
+    res.setHeader('content-type', request.request.headers['content-type'] || 'text/plain');
+    res.send(request.request.body.buffer);
   }
   else res.sendStatus(404);
 });
