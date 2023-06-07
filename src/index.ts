@@ -12,3 +12,8 @@ async function Stop() {
   await ProxyServer.Stop();
   await ApiServer.Stop();
 }
+
+(() => {
+  if (require.main !== module) return;
+  Start();
+})();
