@@ -65,3 +65,8 @@ export
 function Start() {
   api_server.listen(ApiPort);
 }
+
+export
+function Stop() {
+  api_server.close();
+}
