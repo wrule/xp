@@ -19,26 +19,27 @@ router.get('/requests', (req, res) => {
     return url;
   };
   res.setHeader('content-type', 'text/html');
-  res.send(`
-    <!DOCTYPE html>
-    <html><head><meta charset="utf-8"></head>
-    <body style="font-size: 12px">
-      <div style="margin-bottom: 8px">
-        <button onclick="fetch('/api/proxy/start', { method: 'POST' })">start</button>
-        <button onclick="fetch('/api/proxy/stop', { method: 'POST' })">stop</button>
-        <button onclick="fetch('/api/request/clear', { method: 'POST' }).then(() => location.reload())">clear</button>
-      </div>
-      <ul style="margin: 0;padding: 0;list-style-type: none">
-        ${RequestStore.GetAllRequests().map((request, index) => `<li>
-          <span>${index + 1}.</span>
-          <a style="color: blue" href="/api/request/${request.request?.id}/response_body">${decode(request.request?.url)}</a>
-          <a style="color: purple" href="/api/request/${request.request?.id}/request_body">request</a>
-          <a style="color: green" href="/api/request/${request.request?.id}">detail</a>
-          ${request.request?.method === 'GET' ? `<a style="color: orange" href="${request.request?.url}">open</a>` : ''}
-        </li>`).join('')}
-      </ul>
-    </body></html>
-  `);
+  res.send(template);
+  // res.send(`
+  //   <!DOCTYPE html>
+  //   <html><head><meta charset="utf-8"></head>
+  //   <body style="font-size: 12px">
+  //     <div style="margin-bottom: 8px">
+  //       <button onclick="fetch('/api/proxy/start', { method: 'POST' })">start</button>
+  //       <button onclick="fetch('/api/proxy/stop', { method: 'POST' })">stop</button>
+  //       <button onclick="fetch('/api/request/clear', { method: 'POST' }).then(() => location.reload())">clear</button>
+  //     </div>
+  //     <ul style="margin: 0;padding: 0;list-style-type: none">
+  //       ${RequestStore.GetAllRequests().map((request, index) => `<li>
+  //         <span>${index + 1}.</span>
+  //         <a style="color: blue" href="/api/request/${request.request?.id}/response_body">${decode(request.request?.url)}</a>
+  //         <a style="color: purple" href="/api/request/${request.request?.id}/request_body">request</a>
+  //         <a style="color: green" href="/api/request/${request.request?.id}">detail</a>
+  //         ${request.request?.method === 'GET' ? `<a style="color: orange" href="${request.request?.url}">open</a>` : ''}
+  //       </li>`).join('')}
+  //     </ul>
+  //   </body></html>
+  // `);
 });
 router.post('/request/clear', (req, res) => {
   RequestStore.Clear();
