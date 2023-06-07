@@ -3,6 +3,7 @@ import { CloseProxy, OpenProxy, ProxyPort } from './global_proxy';
 import ca from './ca';
 import { IO } from './socket_server';
 import * as RequestStore from './request_store';
+import { decode } from './utils';
 
 const proxy_server = mockttp.getLocal({ https: ca });
 let started = false;
@@ -13,7 +14,7 @@ async function Start() {
   proxy_server.on('request', (request) => {
     RequestStore.UpdateRequest(request);
     IO.emit('request', { ...request, body: undefined });
-    console.log(request.id, request.url);
+    console.log(request.id, decode(request.url));
   });
   proxy_server.on('response', (response) => {
     RequestStore.UpdateResponse(response);
