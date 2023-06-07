@@ -1,12 +1,10 @@
-import { Start, Stop } from './proxy_server';
+import * as ProxyServer from './proxy_server';
 import * as ApiServer from './api_server';
 
-function main() {
+export
+function Start() {
+  ProxyServer.Start();
   ApiServer.Start();
-  Start();
-  // setTimeout(() => {
-  //   Stop();
-  // }, 10000);
 }
 
-main();
+Start();
