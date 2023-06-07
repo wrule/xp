@@ -1,7 +1,7 @@
 import { CompletedRequest, CompletedResponse } from 'mockttp';
 
 const store = new Map<string, {
-  request?: CompletedRequest,
+  request: CompletedRequest,
   response?: CompletedResponse,
 }>;
 
@@ -12,7 +12,7 @@ function UpdateRequest(request: CompletedRequest) {
 
 export
 function UpdateResponse(response: CompletedResponse) {
-  store.set(response.id, { request: store.get(response.id)?.request, response });
+  store.set(response.id, { request: (store.get(response.id) as any)?.request, response });
 }
 
 export
