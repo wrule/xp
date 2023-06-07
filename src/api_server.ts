@@ -2,6 +2,7 @@ import http from 'http';
 import express from 'express';
 import * as ProxyServer from './proxy_server';
 import * as RequestStore from './request_store';
+import { Template } from './template';
 
 const app = express();
 const router = express.Router();
@@ -19,7 +20,7 @@ router.get('/requests', (req, res) => {
     return url;
   };
   res.setHeader('content-type', 'text/html');
-  res.send(template);
+  res.send(Template);
   // res.send(`
   //   <!DOCTYPE html>
   //   <html><head><meta charset="utf-8"></head>
