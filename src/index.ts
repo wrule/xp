@@ -2,9 +2,13 @@ import * as ProxyServer from './proxy_server';
 import * as ApiServer from './api_server';
 
 export
-function Start() {
-  ProxyServer.Start();
-  ApiServer.Start();
+async function Start() {
+  await ProxyServer.Start();
+  await ApiServer.Start();
 }
 
-Start();
+export
+async function Stop() {
+  await ProxyServer.Stop();
+  await ApiServer.Stop();
+}
