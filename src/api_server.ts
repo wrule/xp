@@ -3,6 +3,7 @@ import express from 'express';
 import * as ProxyServer from './proxy_server';
 import * as RequestStore from './request_store';
 import { Template } from './template';
+import { decode } from './utils';
 
 const app = express();
 const router = express.Router();
@@ -15,10 +16,6 @@ router.post('/proxy/stop', async (req, res) => {
   res.sendStatus(200);
 });
 router.get('/requests', (req, res) => {
-  const decode = (url: any) => {
-    try { return decodeURIComponent(url) } catch (e) { }
-    return url;
-  };
   res.setHeader('content-type', 'text/html');
   res.send(Template.replace('{li}', RequestStore.GetAllRequests().map((request, index) => `<li>
     <span>${index + 1}.</span>
