@@ -32,6 +32,6 @@ async function Stop() {
   if (!started) return;
   await proxy_server.stop();
   await CloseProxy();
-  console.log('proxy_server has stopped');
+  console.log('proxy_server stopped');
   started = false;
 }
